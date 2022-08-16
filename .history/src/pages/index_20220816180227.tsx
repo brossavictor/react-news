@@ -28,10 +28,7 @@ export default function Home({ product }: HomeProps) {
           <p>
             Get acess to all the publications <br />
             <span>for </span>
-            {new Intl.NumberFormat('en-ca', {
-              style: 'currency',
-              currency: 'CAD',
-            }).format(product.amount)}
+            {product.amount}
           </p>
           <SubscribeButton />
         </section>
@@ -54,12 +51,12 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   const product = {
     priceId: price.id,
-    amount: (price.unit_amount / 100) as number,
+    amount: price.unit_amount / 100,
   };
 
   return {
     props: {
-      product,
+      name: product,
     },
   };
 };

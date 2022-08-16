@@ -54,12 +54,12 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   const product = {
     priceId: price.id,
-    amount: (price.unit_amount / 100) as number,
+    amount: price.unit_amount / 100,
   };
 
   return {
     props: {
-      product,
+      name: product,
     },
   };
 };

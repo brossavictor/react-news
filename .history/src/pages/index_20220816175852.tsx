@@ -12,7 +12,9 @@ interface HomeProps {
   };
 }
 
-export default function Home({ product }: HomeProps) {
+export default function Home({ {amount} }: HomeProps) {
+ 
+
   return (
     <>
       <Head>
@@ -31,7 +33,7 @@ export default function Home({ product }: HomeProps) {
             {new Intl.NumberFormat('en-ca', {
               style: 'currency',
               currency: 'CAD',
-            }).format(product.amount)}
+            }).format(9.9)}
           </p>
           <SubscribeButton />
         </section>
@@ -54,12 +56,12 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   const product = {
     priceId: price.id,
-    amount: (price.unit_amount / 100) as number,
+    amount: price.unit_amount / 100,
   };
 
   return {
     props: {
-      product,
+      name: product,
     },
   };
 };

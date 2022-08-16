@@ -5,14 +5,7 @@ import { SubscribeButton } from '../components/SubscribeButton';
 import { stripe } from '../services/stripe';
 import styles from './home.module.scss';
 
-interface HomeProps {
-  product: {
-    priceId: String;
-    amount: number;
-  };
-}
-
-export default function Home({ product }: HomeProps) {
+export default function Home(props) {
   return (
     <>
       <Head>
@@ -31,11 +24,10 @@ export default function Home({ product }: HomeProps) {
             {new Intl.NumberFormat('en-ca', {
               style: 'currency',
               currency: 'CAD',
-            }).format(product.amount)}
+            }).format(9.9)}
           </p>
           <SubscribeButton />
         </section>
-
         <Image
           width="336"
           height="521"
@@ -52,14 +44,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
     expand: ['product'],
   });
 
-  const product = {
-    priceId: price.id,
-    amount: (price.unit_amount / 100) as number,
-  };
+  const product = { priceId: price.id, amount: price.unit_amount / 100 };
 
   return {
     props: {
-      product,
+      name: 'JB',
     },
   };
 };

@@ -13,6 +13,8 @@ interface HomeProps {
 }
 
 export default function Home({ product }: HomeProps) {
+  console.log(product.amount);
+
   return (
     <>
       <Head>
@@ -28,10 +30,7 @@ export default function Home({ product }: HomeProps) {
           <p>
             Get acess to all the publications <br />
             <span>for </span>
-            {new Intl.NumberFormat('en-ca', {
-              style: 'currency',
-              currency: 'CAD',
-            }).format(product.amount)}
+            {9.9}
           </p>
           <SubscribeButton />
         </section>
@@ -59,7 +58,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      product,
+      name: product,
     },
   };
 };
