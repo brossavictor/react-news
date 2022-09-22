@@ -23,7 +23,7 @@ export async function saveSubscription(
     price_id: subscription.items.data[0].price.id,
   };
 
-  if (createAction == true) {
+  if (createAction) {
     await fauna.query(
       q.Create(q.Collection('subscriptions'), { data: subscriptionData })
     );

@@ -18,6 +18,19 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     const session = await getSession({ req });
 
+    try {
+      const subscriptionActive = await fauna.query(
+        q.Get(q.Match(q.Index('subscription_by_status'), 'active'))
+      );
+      if (subscriptionActive) {
+        return res
+          .status(400)
+          .send({ message: 'Customer already subscribed.' });
+      }
+    } catch (err) {
+      console.log('Unhandled event.');
+    }
+
     const user = await fauna.query<User>(
       q.Get(q.Match(q.Index('users_by_email'), q.Casefold(session.user.email)))
     );

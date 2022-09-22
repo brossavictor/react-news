@@ -1,9 +1,9 @@
-import { signIn, useSession, getSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { api } from '../../services/api';
 import { getStripeJs } from '../../services/stripe-js';
 import styles from './styles.module.scss';
 
-export function SubscribeButton() {
+export function SubscribeNowButton() {
   const { data } = useSession();
 
   async function handleSubscribe() {
@@ -26,10 +26,13 @@ export function SubscribeButton() {
   return (
     <button
       type="button"
-      className={styles.subscribeButton}
+      className={styles.subscribeNowButton}
       onClick={handleSubscribe}
     >
-      Subscribe now
+      <p>
+        Want to continue reading?
+        <span> Subscribe now! 🤗</span>
+      </p>
     </button>
   );
 }

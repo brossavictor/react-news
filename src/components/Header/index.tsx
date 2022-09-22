@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { ActiveLink } from '../ActiveLink';
 import { SignInButton } from '../SignInButton';
 import styles from './styles.module.scss';
@@ -9,7 +9,9 @@ export function Header() {
   return (
     <header className={styles.headerContainer}>
       <div className={styles.headerContent}>
-        <Image width="110" height="31" src="/images/logo.svg" alt="ig.news" />
+        <a href="/">
+          <Image width="110" height="31" src="/images/logo.svg" alt="ig.news" />
+        </a>
         <nav>
           <ActiveLink activeClassName={styles.active} href="/">
             <a>Home</a>

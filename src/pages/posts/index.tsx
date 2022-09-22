@@ -4,6 +4,8 @@ import styles from './styles.module.scss';
 import * as Prismic from '@prismicio/client';
 import { GetStaticProps } from 'next';
 import { RichText } from 'prismic-dom';
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 type Post = {
   slug: string;
@@ -16,7 +18,14 @@ interface PostProps {
   posts: Post[];
 }
 
-export default function Posts({ posts }) {
+export default function Posts({ posts }: PostProps) {
+  const { data: session } = useSession();
+  let postPath = '/posts/preview/';
+
+  if (session) {
+    postPath = '/posts/';
+  }
+
   return (
     <>
       <Head>Posts | Ignews</Head>
@@ -24,11 +33,13 @@ export default function Posts({ posts }) {
       <main className={styles.container}>
         <div className={styles.posts}>
           {posts.map((post) => (
-            <a key={post.slug} href="#">
-              <time>{post.updatedAt}</time>
-              <strong>{post.title}</strong>
-              <p>{post.excerpt}</p>
-            </a>
+            <Link key={post.slug} href={`${postPath}${post.slug}`}>
+              <a>
+                <time>{post.updatedAt}</time>
+                <strong>{post.title}</strong>
+                <p>{post.excerpt}</p>
+              </a>
+            </Link>
           ))}
         </div>
       </main>
@@ -63,8 +74,6 @@ export const getStaticProps: GetStaticProps = async () => {
       ),
     };
   });
-
-  console.log(JSON.stringify(response, null, 2));
 
   return { props: { posts } };
 };
